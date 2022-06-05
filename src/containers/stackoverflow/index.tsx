@@ -9,6 +9,7 @@ import ActivityIndicator from '../../components/activityIndicator';
 import Title from '../../components/labels/Title';
 import StackoverflowList from '../../components/list/Stackoverflow';
 import Filters from './Filters';
+import Text from '../../components/labels/Text';
 
 const StackOverflow = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,9 +18,13 @@ const StackOverflow = () => {
   const onSubmit = async ({nativeEvent: {text}}) => {
     setSearched(true);
     setLoading(true);
-    const resp = await get(getUser.replace('[ID]', text));
-    sortData(resp.items, 'creation_date');
-    setLoading(false);
+    try{
+      const resp = await get(getUser.replace('[ID]', text));
+      sortData(resp.items, 'creation_date');
+      setLoading(false);
+    }catch(err){
+      setLoading(false);
+    }
   };
 
   const sortData = (data, sortBy) =>
@@ -46,6 +51,7 @@ const StackOverflow = () => {
             <View style={{flex: 1}}>
               <StackoverflowList data={data} />
             </View>
+            <Text style={{alignSelf: 'center', paddingVertical: 10}} label={`Total questions: ${data.length}`} />
           </>
         ) : (
           <View style={{alignSelf: 'center'}}>
