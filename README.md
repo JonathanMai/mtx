@@ -1,4 +1,4 @@
-# mtx - Stackoverflow Questions.
+# Stackoverflow Questions.
 
 To run the app please follow the instructions
 
